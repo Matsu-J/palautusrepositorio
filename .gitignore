@@ -1,2 +1,7 @@
-__pycache__
+__pycache__/
+.venv/
+.pytest_cache/
+htmlcov/
 viikko1/varasto
+viikko1/riippuvuuksien-injektointi/.coverage
+viikko1/riippuvuuksien-injektointi/htmlcov
