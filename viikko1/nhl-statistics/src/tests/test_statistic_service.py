@@ -1,5 +1,5 @@
 import unittest
-from statistics_service import StatisticsService
+from statistics_service import StatisticsService, SortBy
 from player import Player
 
 class PlayerReaderStub:
@@ -39,10 +39,6 @@ class TestStatisticsService(unittest.TestCase):
     def test_find_non_existing_team(self):
         result = self.stats.team("Example")
         self.assertEqual(len(result), 0)
-
-    def test_best_player(self):
-        top_player = self.stats.top(0)
-        self.assertEqual(top_player[0].name, "Gretzky")
     
     def test_top_negative(self):
         top_player = self.stats.top(-1)
@@ -50,3 +46,26 @@ class TestStatisticsService(unittest.TestCase):
         top_player = self.stats.top(-10)
         self.assertEqual(len(top_player), 0)
     
+    def test_top_points(self):
+        top_player = self.stats.top(0)
+        self.assertEqual(top_player[0].name, "Gretzky")
+        top_player = self.stats.top(0, SortBy.POINTS)
+        self.assertEqual(top_player[0].name, "Gretzky")
+    
+    def test_top_goals(self):
+        top_player = self.stats.top(1, SortBy.GOALS)
+        self.assertEqual(top_player[0].name, "Lemieux")
+        self.assertEqual(top_player[1].name, "Yzerman")
+
+    def test_top_assists(self):
+        top_player = self.stats.top(1, SortBy.ASSISTS)
+        self.assertEqual(top_player[0].name, "Gretzky")
+        self.assertEqual(top_player[1].name, "Yzerman")
+    
+    def test_top_something_else(self):
+        top_player = self.stats.top(1, "Does this work?")
+        self.assertEqual(top_player[0].name, "Gretzky")
+        self.assertEqual(top_player[1].name, "Lemieux")
+        top_player = self.stats.top(1, 10)
+        self.assertEqual(top_player[0].name, "Gretzky")
+        self.assertEqual(top_player[1].name, "Lemieux")
