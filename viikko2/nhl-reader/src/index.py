@@ -15,7 +15,7 @@ def main():
 
     print(f"Players from {nationality}:")
 
-    for player in players:
+    for player in sorted(players, key=lambda player: player.points, reverse=True):
         print(player)
 
 if __name__ == "__main__":
