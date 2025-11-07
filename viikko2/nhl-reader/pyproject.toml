@@ -3,15 +3,14 @@ name = "nhl-reader"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Matti Luukkainen",email = "mluukkai@iki.fi"}
+    {name = "Matias Jerkkola",email = "matsu.jerkkola@gmail.com"}
 ]
-license = {text = "MIT"}
+readme = "README.md"
 requires-python = "^3.12"
 dependencies = [
+    "requests (>=2.32.5,<3.0.0)"
 ]
 
-[tool.poetry]
-package-mode = false
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
