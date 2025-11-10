@@ -1,5 +1,4 @@
 from statistics_service import PlayerReader, PlayerStats
-<<<<<<< HEAD
 from rich import print as rprint
 from rich.table import Table, Column
 
@@ -57,17 +56,6 @@ def main():
         
         rprint(stats_table)
         print()
-=======
-
-def main():
-    url = "https://studies.cs.helsinki.fi/nhlstats/2024-25/players"
-    reader = PlayerReader(url)
-    stats = PlayerStats(reader)
-    players = stats.top_scorers_by_nationality("FIN")
-
-    for player in sorted(players, key=lambda player: player.points, reverse=True):
-        print(player)
->>>>>>> 0eaa6b36f5b18c17090505065c3da38f8b5dfe27
 
 if __name__ == "__main__":
     main()

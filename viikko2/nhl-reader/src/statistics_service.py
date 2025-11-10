@@ -1,10 +1,6 @@
 import requests
 from player import Player
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 0eaa6b36f5b18c17090505065c3da38f8b5dfe27
 class PlayerReader:
     def __init__(self, url):
         self.url = url
