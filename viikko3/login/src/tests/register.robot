@@ -47,7 +47,6 @@ Register With Username That Is Already In Use
     Confirm Password  salasana123
     Click Button  Register
     Register Should Fail With Message  Username kalle is already taken
-#
 
 *** Keywords ***
 Register Should Succeed
