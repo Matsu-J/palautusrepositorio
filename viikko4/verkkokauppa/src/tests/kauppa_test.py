@@ -155,7 +155,7 @@ class TestKauppa(unittest.TestCase):
             if tuote_id == 1:
                 return 10
             if tuote_id == 2:
-                return 10
+                return 20
 
         # tehdään toteutus hae_tuote-metodille
         def varasto_hae_tuote(tuote_id):
