@@ -111,8 +111,8 @@ class TestKauppa(unittest.TestCase):
 
     def test_tuote_loppu(self):
 
-        # palautetaan aina arvo 42
-        self.viitegeneraattori_mock.uusi.return_value = 42
+        # palautetaan aina arvo 22
+        self.viitegeneraattori_mock.uusi.return_value = 22
 
         # tehdään toteutus saldo-metodille
         def varasto_saldo(tuote_id):
