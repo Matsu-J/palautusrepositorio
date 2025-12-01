@@ -1,5 +1,4 @@
 import unittest
-
 from tennis_game import TennisGame
 
 test_cases = [
