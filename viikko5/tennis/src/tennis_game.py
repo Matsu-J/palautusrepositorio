@@ -13,8 +13,8 @@ class TennisGame:
     def even(self, score):
         if score >= 3:
             score = 3
-        scores = ["Love-All", "Fifteen-All", "Thirty-All", "Deuce"]
-        return scores[score]
+        even_score_labels = ["Love-All", "Fifteen-All", "Thirty-All", "Deuce"]
+        return even_score_labels[score]
     def advantage(self):
         difference = self.scores[self.player1] - self.scores[self.player2]
         if difference == 1:
