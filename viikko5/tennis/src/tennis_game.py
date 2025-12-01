@@ -33,7 +33,7 @@ class TennisGame:
         if self.scores[self.player1] == self.scores[self.player2]:
             return self.even(self.scores[self.player1])
         elif self.scores[self.player1] >= 4 or self.scores[self.player2] >= 4:
-            return self.advantage()       
+            return self.advantage()
         else:
             return self.scoreboard()
 
