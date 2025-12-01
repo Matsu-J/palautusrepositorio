@@ -15,7 +15,6 @@ class TennisGame:
             score = 3
         scores = ["Love-All", "Fifteen-All", "Thirty-All", "Deuce"]
         return scores[score]
-    
     def advantage(self):
         difference = self.scores[self.player1] - self.scores[self.player2]
         if difference == 1:
