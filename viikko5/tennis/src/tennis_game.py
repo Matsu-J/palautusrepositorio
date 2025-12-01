@@ -25,7 +25,6 @@ class TennisGame:
             return "Win for player1"
         else:
             return "Win for player2"
-        
     def scoreboard(self):
         scores = ["Love", "Fifteen", "Thirty", "Forty"]
         return f"{scores[self.scores[self.player1]]}-{scores[self.scores[self.player2]]}"
