@@ -33,6 +33,13 @@ class Nollaus:
     def suorita(self):
         self.sovelluslogiikka.nollaa()
 
+class Kumous:
+    def __init__(self, sovelluslogiikka):
+        self.sovelluslogiikka = sovelluslogiikka
+    
+    def suorita(self):
+        self.sovelluslogiikka.kumoa()
+
 
 class Kayttoliittyma:
     def __init__(self, sovelluslogiikka, root):
@@ -42,7 +49,8 @@ class Kayttoliittyma:
         self._komennot = {
             Komento.SUMMA: Summa(sovelluslogiikka, self._lue_syote),
             Komento.EROTUS: Erotus(sovelluslogiikka, self._lue_syote),
-            Komento.NOLLAUS: Nollaus(sovelluslogiikka)
+            Komento.NOLLAUS: Nollaus(sovelluslogiikka),
+            Komento.KUMOA: Kumous(sovelluslogiikka)
         }
 
     def kaynnista(self):
