@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kierroksen tulos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .result {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 40px 0;
+            font-size: 64px;
+        }
+        .player {
+            text-align: center;
+        }
+        .player-label {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .vs {
+            font-size: 24px;
+            color: #999;
+        }
+        .scoreboard {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .score-item {
+            display: inline-block;
+            margin: 0 20px;
+            font-size: 18px;
+        }
+        .continue-button {
+            padding: 15px 30px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+        .continue-button:hover {
+            background-color: #45a049;
+        }
+        .back-button {
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #999;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 10px auto;
+        }
+        .back-button:hover {
+            background-color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kierroksen tulos</h1>
+        
+        <div class="result">
+            <div class="player">
+                <div class="player-label">Pelaaja 1</div>
+                <div>
+                    {% if ekan_siirto == 'k' %}✊
+                    {% elif ekan_siirto == 'p' %}✋
+                    {% else %}✌️{% endif %}
+                </div>
+            </div>
+            <div class="vs">VS</div>
+            <div class="player">
+                <div class="player-label">
+                    {% if game_type == 'a' %}Pelaaja 2{% else %}Tekoäly{% endif %}
+                </div>
+                <div>
+                    {% if tokan_siirto == 'k' %}✊
+                    {% elif tokan_siirto == 'p' %}✋
+                    {% else %}✌️{% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="scoreboard">
+            <div class="score-item">
+                <strong>Pelaaja 1:</strong> {{ ekan_pisteet }} pistettä
+            </div>
+            <div class="score-item">
+                <strong>{% if game_type == 'a' %}Pelaaja 2{% else %}Tekoäly{% endif %}:</strong> {{ tokan_pisteet }} pistettä
+            </div>
+            <div class="score-item">
+                <strong>Tasapelit:</strong> {{ tasapelit }}
+            </div>
+        </div>
+
+        <a href="/game">
+            <button class="continue-button">Jatka peliä →</button>
+        </a>
+        
+        <a href="/">
+            <button class="back-button">Lopeta peli</button>
+        </a>
+    </div>
+</body>
+</html>

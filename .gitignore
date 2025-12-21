@@ -7,4 +7,6 @@ viikko1/riippuvuuksien-injektointi/.coverage
 viikko1/riippuvuuksien-injektointi/htmlcov
 viikko1/nhl-statistics/htmlcov
 viikko1/nhl-statistics/.coverage
-
+report.html
+output.xml
+log.html
