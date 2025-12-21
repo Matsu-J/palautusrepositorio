@@ -99,5 +99,39 @@ class TestFlaskApp(unittest.TestCase):
             self.assertNotIn('game_type', sess)
             self.assertNotIn('tuomari_ekan_pisteet', sess)
 
+    def test_winner_page_loads(self):
+        with self.client.session_transaction() as sess:
+            sess['game_type'] = 'b'
+            sess['tuomari_ekan_pisteet'] = 5
+            sess['tuomari_tokan_pisteet'] = 2
+        
+        response = self.client.get('/winner/1')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Voitti', response.data)
+
+    def test_winner_page_invalid_without_session(self):
+        response = self.client.get('/winner/1')
+        self.assertEqual(response.status_code, 302)
+
+    def test_game_redirects_to_winner_when_five_points(self):
+        with self.client.session_transaction() as sess:
+            sess['game_type'] = 'b'
+            sess['tuomari_ekan_pisteet'] = 5
+            sess['tuomari_tokan_pisteet'] = 2
+        
+        response = self.client.get('/game')
+        self.assertEqual(response.status_code, 302)
+        self.assertIn('/winner/1', response.location)
+
+    def test_game_redirects_to_winner_when_opponent_has_five(self):
+        with self.client.session_transaction() as sess:
+            sess['game_type'] = 'b'
+            sess['tuomari_ekan_pisteet'] = 2
+            sess['tuomari_tokan_pisteet'] = 5
+        
+        response = self.client.get('/game')
+        self.assertEqual(response.status_code, 302)
+        self.assertIn('/winner/2', response.location)
+
 if __name__ == '__main__':
     unittest.main()

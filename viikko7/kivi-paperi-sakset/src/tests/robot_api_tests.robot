@@ -43,3 +43,9 @@ Peli Sivu Ilman Sessiota
     ${response}=    GET On Session    kps    /game    expected_status=any
     # Tarkista että päädyttiin etusivulle (redirect seurattu)
     Should Be True    ${response.status_code} == 200 or ${response.status_code} == 302
+
+Voittaja-sivu Ilman Sessiota
+    [Documentation]    Tarkista että voittaja-sivu ohjaa etusivulle ilman sessiota
+    ${response}=    GET On Session    kps    /winner/1    expected_status=any
+    # Tarkista että päädyttiin etusivulle (redirect seurattu)
+    Should Be True    ${response.status_code} == 200 or ${response.status_code} == 302

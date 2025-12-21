@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peli Päättyi!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .winner-box {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .winner-box h1 {
+            margin: 0;
+            font-size: 48px;
+        }
+        .trophy {
+            font-size: 80px;
+            margin: 20px 0;
+        }
+        .final-score {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .score-item {
+            display: inline-block;
+            margin: 0 20px;
+            font-size: 18px;
+        }
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .back-button {
+            background-color: #999;
+        }
+        .back-button:hover {
+            background-color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="winner-box">
+            <div class="trophy">🏆</div>
+            {% if winner == 1 %}
+                <h1>Pelaaja 1 Voitti!</h1>
+            {% else %}
+                <h1>
+                    {% if game_type == 'a' %}
+                        Pelaaja 2 Voitti!
+                    {% else %}
+                        Tekoäly Voitti!
+                    {% endif %}
+                </h1>
+            {% endif %}
+        </div>
+
+        <div class="final-score">
+            <h2>Lopulliset Pisteet</h2>
+            <div class="score-item">
+                <strong>Pelaaja 1:</strong> {{ ekan_pisteet }} pistettä
+            </div>
+            <div class="score-item">
+                <strong>{% if game_type == 'a' %}Pelaaja 2{% else %}Tekoäly{% endif %}:</strong> {{ tokan_pisteet }} pistettä
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a href="/">
+                <button class="back-button">« Etusivulle</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

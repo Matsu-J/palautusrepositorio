@@ -6,6 +6,17 @@ import secrets
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 
+WINNING_POINTS = 5
+
+def check_winner():
+    ekan_pisteet = session.get('tuomari_ekan_pisteet', 0)
+    tokan_pisteet = session.get('tuomari_tokan_pisteet', 0)
+    if ekan_pisteet >= WINNING_POINTS:
+        return 1
+    elif tokan_pisteet >= WINNING_POINTS:
+        return 2
+    return None
+
 @app.route('/')
 def index():
     # Nollaa sessio kun palataan etusivulle
@@ -31,6 +42,10 @@ def new_game():
 def game():
     if 'game_type' not in session:
         return redirect(url_for('index'))
+    
+    winner = check_winner()
+    if winner is not None:
+        return redirect(url_for('show_winner', winner=winner))
     
     game_type = session['game_type']
     game_type_names = {
@@ -137,6 +152,17 @@ def second_move():
                          tokan_pisteet=tuomari.tokan_pisteet,
                          tasapelit=tuomari.tasapelit,
                          game_type=session['game_type'])
+
+@app.route('/winner/<int:winner>')
+def show_winner(winner):
+    if 'game_type' not in session:
+        return redirect(url_for('index'))
+    ekan_pisteet = session.get('tuomari_ekan_pisteet', 0)
+    tokan_pisteet = session.get('tuomari_tokan_pisteet', 0)
+    game_type = session['game_type']
+    if winner not in (1, 2) or (winner == 1 and ekan_pisteet < WINNING_POINTS) or (winner == 2 and tokan_pisteet < WINNING_POINTS):
+        return redirect(url_for('game'))
+    return render_template('winner.html', winner=winner, ekan_pisteet=ekan_pisteet, tokan_pisteet=tokan_pisteet, game_type=game_type)
 
 if __name__ == '__main__':
     app.run(debug=True)
