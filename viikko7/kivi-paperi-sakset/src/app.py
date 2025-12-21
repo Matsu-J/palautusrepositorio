@@ -6,7 +6,7 @@ import secrets
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 
-WINNING_POINTS = 5
+WINNING_POINTS = 3
 
 def check_winner():
     ekan_pisteet = session.get('tuomari_ekan_pisteet', 0)
