@@ -49,3 +49,8 @@ Voittaja-sivu Ilman Sessiota
     ${response}=    GET On Session    kps    /winner/1    expected_status=any
     # Tarkista että päädyttiin etusivulle (redirect seurattu)
     Should Be True    ${response.status_code} == 200 or ${response.status_code} == 302
+
+Tasapeli Voittaja-sivu
+    [Documentation]    Tarkista että voittaja-sivu toimii tasapelillä
+    ${response}=    GET On Session    kps    /winner/0    expected_status=any
+    Should Be True    ${response.status_code} == 200 or ${response.status_code} == 302

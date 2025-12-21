@@ -133,5 +133,27 @@ class TestFlaskApp(unittest.TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertIn('/winner/2', response.location)
 
+    def test_game_redirects_to_winner_when_five_ties(self):
+        with self.client.session_transaction() as sess:
+            sess['game_type'] = 'b'
+            sess['tuomari_ekan_pisteet'] = 2
+            sess['tuomari_tokan_pisteet'] = 2
+            sess['tuomari_tasapelit'] = 5
+        
+        response = self.client.get('/game')
+        self.assertEqual(response.status_code, 302)
+        self.assertIn('/winner/0', response.location)
+
+    def test_winner_page_with_ties(self):
+        with self.client.session_transaction() as sess:
+            sess['game_type'] = 'b'
+            sess['tuomari_ekan_pisteet'] = 2
+            sess['tuomari_tokan_pisteet'] = 2
+            sess['tuomari_tasapelit'] = 5
+        
+        response = self.client.get('/winner/0')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'tasapeleihin', response.data)
+
 if __name__ == '__main__':
     unittest.main()

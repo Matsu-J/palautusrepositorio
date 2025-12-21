@@ -7,14 +7,18 @@ app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 
 WINNING_POINTS = 3
+MAX_TIES = 5
 
 def check_winner():
     ekan_pisteet = session.get('tuomari_ekan_pisteet', 0)
     tokan_pisteet = session.get('tuomari_tokan_pisteet', 0)
+    tasapelit = session.get('tuomari_tasapelit', 0)
     if ekan_pisteet >= WINNING_POINTS:
         return 1
     elif tokan_pisteet >= WINNING_POINTS:
         return 2
+    elif tasapelit >= MAX_TIES:
+        return 0  # 0 tarkoittaa tasapelivoittoa
     return None
 
 @app.route('/')
@@ -151,10 +155,18 @@ def show_winner(winner):
         return redirect(url_for('index'))
     ekan_pisteet = session.get('tuomari_ekan_pisteet', 0)
     tokan_pisteet = session.get('tuomari_tokan_pisteet', 0)
+    tasapelit = session.get('tuomari_tasapelit', 0)
     game_type = session['game_type']
-    if winner not in (1, 2) or (winner == 1 and ekan_pisteet < WINNING_POINTS) or (winner == 2 and tokan_pisteet < WINNING_POINTS):
+    # Tarkista että voittaja on validi
+    if winner not in (0, 1, 2):
         return redirect(url_for('game'))
-    return render_template('winner.html', winner=winner, ekan_pisteet=ekan_pisteet, tokan_pisteet=tokan_pisteet, game_type=game_type)
+    if winner == 1 and ekan_pisteet < WINNING_POINTS:
+        return redirect(url_for('game'))
+    if winner == 2 and tokan_pisteet < WINNING_POINTS:
+        return redirect(url_for('game'))
+    if winner == 0 and tasapelit < MAX_TIES:
+        return redirect(url_for('game'))
+    return render_template('winner.html', winner=winner, ekan_pisteet=ekan_pisteet, tokan_pisteet=tokan_pisteet, tasapelit=tasapelit, game_type=game_type)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5000)
