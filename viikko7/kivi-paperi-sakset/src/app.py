@@ -68,12 +68,12 @@ def make_move():
     
     ekan_siirto = request.form.get('move')
     
-    # Tarkista että siirto on validi
-    if ekan_siirto not in ('k', 'p', 's'):
-        return redirect(url_for('game'))
-    
+    # Käytä KPS-luokan validointimetodia
     game_type = session['game_type']
     peli = luo_peli(game_type)
+    
+    if not peli._onko_ok_siirto(ekan_siirto):
+        return redirect(url_for('game'))
     
     # Hae toisen pelaajan siirto
     if game_type == 'a':
@@ -81,20 +81,11 @@ def make_move():
         session['waiting_for_second_move'] = ekan_siirto
         return render_template('waiting.html', ekan_siirto=ekan_siirto)
     else:
-        # Pelaaja vs tekoäly
-        if game_type == 'b':
-            from tekoaly import Tekoaly
-            ai = Tekoaly()
-            tokan_siirto = ai.anna_siirto()
-        else:  # game_type == 'c'
-            from tekoaly_parannettu import TekoalyParannettu
-            ai = TekoalyParannettu(10)
-            # Aseta aiemmat siirrot
-            for siirto in session.get('tekoaly_siirrot', []):
-                ai.aseta_siirto(siirto)
-            tokan_siirto = ai.anna_siirto()
-            # Tallenna siirto tekoälyn muistiin
-            ai.aseta_siirto(ekan_siirto)
+        # Käytä KPS-luokan metodia toisen siirron saamiseen
+        tokan_siirto = peli._toisen_siirto(ekan_siirto)
+        
+        # Tallenna tekoälyn siirrot sessioon parannettua tekoälyä varten
+        if game_type == 'c':
             session['tekoaly_siirrot'] = session.get('tekoaly_siirrot', []) + [ekan_siirto]
     
     # Käsittele siirto
@@ -127,8 +118,9 @@ def second_move():
     ekan_siirto = session.pop('waiting_for_second_move')
     tokan_siirto = request.form.get('move')
     
-    # Tarkista että siirto on validi
-    if tokan_siirto not in ('k', 'p', 's'):
+    # Käytä KPS-luokan validointimetodia
+    peli = luo_peli(session['game_type'])
+    if not peli._onko_ok_siirto(tokan_siirto):
         return redirect(url_for('game'))
     
     # Käsittele siirto
@@ -165,4 +157,4 @@ def show_winner(winner):
     return render_template('winner.html', winner=winner, ekan_pisteet=ekan_pisteet, tokan_pisteet=tokan_pisteet, game_type=game_type)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)

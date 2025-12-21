@@ -3,7 +3,7 @@ Library    RequestsLibrary
 Suite Setup    Create Session    kps    ${SERVER_URL}
 
 *** Variables ***
-${SERVER_URL}    http://localhost:5000
+${SERVER_URL}    http://localhost:5001
 
 *** Test Cases ***
 Etusivu Palauttaa 200 OK

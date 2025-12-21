@@ -4,7 +4,7 @@ Suite Setup    Open Browser And Start Server
 Suite Teardown    Close Browser And Stop Server
 
 *** Variables ***
-${SERVER_URL}    http://localhost:5000
+${SERVER_URL}    http://localhost:5001
 ${BROWSER}    chromium
 
 *** Test Cases ***

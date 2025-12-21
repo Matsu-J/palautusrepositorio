@@ -10,3 +10,4 @@ viikko1/nhl-statistics/.coverage
 report.html
 output.xml
 log.html
+flask.log
